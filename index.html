@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop watch</title>
+    <link rel="shortcut icon"
+        href="https://th.bing.com/th/id/OIP.E2gjXAmLXTUSWhAF_QmH3gHaHa?w=202&h=202&c=7&r=0&o=5&pid=1.7"
+        type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: lightcyan;
+        }
+
+        .timer-display-div {
+            width: 700px;
+            height: 300px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: rgba(0, 0, 0, 0.45) 5px 7px 12px 10px;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 50%;
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            position: relative;
+            flex: 1;
+        }
+
+        .milisec::before {
+            content: "Milisecond";
+            position: absolute;
+            bottom: 36px;
+            font-size: 14px;
+            right: 30px;
+        }
+
+        .sec::before {
+            content: "Second";
+            position: absolute;
+            bottom: 36px;
+            font-size: 14px;
+            right: 30px;
+        }
+
+        .minutes::before {
+            content: "Minutes";
+            position: absolute;
+            bottom: 36px;
+            font-size: 14px;
+            right: 30px;
+        }
+
+        .hours::before {
+            content: "Hours";
+            position: absolute;
+            bottom: 36px;
+            font-size: 14px;
+            right: 30px;
+        }
+
+        .btns {
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btns button {
+            width: 100px;
+            height: 35px;
+            border: none;
+            background-color: #94fc;
+            margin: 20px;
+            box-shadow: rgba(0, 0, 0, 0.45) 2px 6px 19px 5px;
+            transition: all 0.9s;
+            font-weight: 600;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .btns button:hover {
+            background-color: darkcyan;
+            color: black;
+        }
+
+        @media (max-width:400px) {
+            .btns {
+                display: flex;
+                justify-content: end;
+                flex-direction: column;
+            }
+
+            .btns button {
+                margin: 10px;
+                height: 40px !important;
+            }
+        }
+
+        @media (max-width:530px) {
+
+            h1::before {
+                position: absolute;
+                bottom: 0;
+                left: 35px;
+                /* right: 50px; */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="timer-display-div">
+        <div class="timer">
+            <h1 class="milisec">00</h1>
+            <h1 class="sec">00</h1>
+            <h1 class="minutes">00</h1>
+            <h1 class="hours">00</h1>
+        </div>
+        <div class="btns">
+            <button id="start">start</button>
+            <button id="stop">pause</button>
+            <button id="reset">stop</button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script type="module">
+        let mil = document.querySelector(".milisec")
+        let secc = document.querySelector(".sec")
+        let minutes = document.querySelector(".minutes")
+        let hours = document.querySelector(".hours")
+
+        let milisec = 0;
+        let sec = 0;
+        let min = 0;
+        let hoursIn = 0;
+        let interval = null
+
+
+        const startTimer = (e) => {
+            interval = setInterval(stopwatch, 0)
+            console.log('start');
+            // interval;    
+        }
+
+        const stopwatch = (e) => {
+            milisec++
+            if (milisec >= 1000) {
+                milisec = 0;
+                sec++
+            } else if (sec >= 60) {
+                sec = 0;
+                min++
+            } else if (min >= 60) {
+                min = 0;
+                hoursIn++
+            }
+
+            mil.innerHTML = milisec
+            secc.innerHTML = sec < 10 ? "0" + sec : sec
+            minutes.innerHTML = min < 10 ? "0" + min : min
+            hours.innerHTML = hoursIn < 10 ? "0" + hoursIn : hoursIn
+        }
+
+        const stopTimer = (e) => {
+            console.log('stop');
+            clearInterval(interval)
+        }
+
+
+        const resetTime = (e) => {
+            clearInterval(interval)
+            mil.innerHTML = "00"
+            secc.innerHTML = "00"
+            minutes.innerHTML = "00"
+            console.log('reset');
+        }
+
+
+        let start_btn = document.querySelector("#start")
+        let stop = document.querySelector("#stop")
+        let reset = document.querySelector("#reset")
+
+        reset.addEventListener("click", resetTime)
+        stop.addEventListener("click", stopTimer)
+        start_btn.addEventListener("click", startTimer)
+    </script>
+</body>
+
+</html>
